@@ -5,14 +5,23 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
+const setupTestEnv = require("./test/setup");
+const { isTest } = require("./utils/environment");
 const logger = require("./utils/logger");
 const rootRouter = require("./routes/index");
 
 const { json, urlencoded } = express;
 
+if (isTest()) {
+  setupTestEnv();
+}
+
 // Connect MongoDB Driver
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     logger.info("MongoDB connection succeeded");
   })

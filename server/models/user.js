@@ -6,19 +6,24 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   username: {
     type: String,
+    required: true,
   },
   email: {
     type: String,
     unique: true, // This will create a unique index on the email field
+    required: true,
   },
   password: {
     type: String,
+    required: true,
   },
   created: {
     type: Date,
+    required: true,
   },
   updated: {
     type: Date,
+    required: true,
   },
 });
 
