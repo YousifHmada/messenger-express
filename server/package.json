@@ -4,18 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
+    "db": "docker-compose up",
     "debug": "nodemon  --inspect ./bin/www",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --exit --timeout 30000"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
-    "dotenv": "^8.2.0",
+    "dotenv-defaults": "^2.0.1",
     "express": "^4.17.1",
     "http-errors": "~1.8.0",
+    "moment-timezone": "^0.5.33",
+    "mongoose": "^5.12.1",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.6"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
+    "nodemon": "^2.0.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^8.2.1"
