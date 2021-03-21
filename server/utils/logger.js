@@ -1,6 +1,6 @@
-const winston = require("winston");
+const winston = require('winston');
 
-const { isProduction } = require("./environment");
+const { isProduction } = require('./environment');
 
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL,
@@ -11,7 +11,7 @@ if (!isProduction()) {
   logger.add(
     new winston.transports.Console({
       format: winston.format.simple(),
-    })
+    }),
   ); // Logs to STDOUT
 }
 

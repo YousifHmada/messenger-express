@@ -1,14 +1,14 @@
-const CustomError = require("../utils/customError");
-const logger = require("../utils/logger");
+const CustomError = require('../utils/customError');
+const logger = require('../utils/logger');
 const {
   validateUsername,
   validateEmail,
   validatePassword,
-} = require("../utils/validate");
-const { hash, compareHash } = require("../utils/crypto");
-const User = require("../models/user");
-const { isEmpty, find, isNotEmpty } = require("../utils/array");
-const ERRORS = require("../utils/errors");
+} = require('../utils/validate');
+const { hash, compareHash } = require('../utils/crypto');
+const User = require('../models/user');
+const { isEmpty, find, isNotEmpty } = require('../utils/array');
+const ERRORS = require('../utils/errors');
 
 async function createUser({ username, email, password }) {
   // Validate Syntax
@@ -16,7 +16,7 @@ async function createUser({ username, email, password }) {
     validateUsername(username),
     validateEmail(email),
     validatePassword(password),
-    isNotEmpty
+    isNotEmpty,
   );
   if (syntaxError) throw new CustomError(syntaxError);
 
@@ -27,9 +27,12 @@ async function createUser({ username, email, password }) {
   });
 
   try {
-    // NOTE - don't use return directly, use await then return the response, so that errors get caught in this function not the outer one
+    /**
+     * NOTE - don't use return directly, use await then return the response,
+     * so that errors get caught in this function not the outer one
+     */
     const response = await user.save();
-    logger.debug("User created", {
+    logger.debug('User created', {
       email,
       response,
     });

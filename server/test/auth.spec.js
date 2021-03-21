@@ -1,38 +1,38 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const app = require("../app.js");
-const ERRORS = require("../utils/errors.js");
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const app = require('../app.js');
+const ERRORS = require('../utils/errors.js');
 
 chai.should();
 chai.use(chaiHttp);
 
-describe("/POST auth/register", () => {
-  it("it should return 201", (done) => {
+describe('/POST auth/register', () => {
+  it('it should return 201', (done) => {
     chai
       .request(app)
-      .post(`/auth/register/`)
+      .post('/auth/register/')
       .send({
-        username: "hello",
+        username: 'hello',
         email: `hello+${new Date().getTime()}@test.com`,
-        password: "123456",
+        password: '123456',
       })
       .end((err, res) => {
         res.should.have.status(201);
         done();
       });
   });
-  it("it should return 4xx with an error", (done) => {
+  it('it should return 4xx with an error', (done) => {
     chai
       .request(app)
-      .post(`/auth/register/`)
+      .post('/auth/register/')
       .send({
-        username: "hello",
+        username: 'hello',
         email: `hello+${new Date().getTime()}@test.com`,
       })
       .end((err, res) => {
         res.should.have.status(400);
-        res.body.should.have.property("message").eql(ERRORS.REQUIRED_PASSWORD);
-        res.body.should.have.property("status").eql(400);
+        res.body.should.have.property('message').eql(ERRORS.REQUIRED_PASSWORD);
+        res.body.should.have.property('status').eql(400);
         done();
       });
   });

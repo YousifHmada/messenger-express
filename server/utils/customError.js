@@ -1,4 +1,4 @@
-const { isDevelopment } = require("./environment");
+const { isDevelopment } = require('./environment');
 
 class CustomError extends Error {
   constructor(payload) {
@@ -6,11 +6,11 @@ class CustomError extends Error {
     if (payload instanceof Error) {
       this.message = isDevelopment()
         ? payload.message
-        : "Unexpected error occured";
+        : 'Unexpected error occured';
       this.status = 500;
       this.stack = payload.stack;
       this.showStack = isDevelopment();
-    } else if (typeof payload === "object") {
+    } else if (typeof payload === 'object') {
       this.message = payload.message;
       this.status = payload.status || 400;
       this.metadata = payload.metadata;
@@ -19,6 +19,7 @@ class CustomError extends Error {
       this.status = 400;
     }
   }
+
   json() {
     return {
       message: this.message,

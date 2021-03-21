@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
@@ -18,11 +18,11 @@ const UserSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Use this method to map user object on the API level
-UserSchema.methods.json = function () {
+UserSchema.methods.json = function json() {
   return {
     username: this.username,
     email: this.email,
@@ -31,6 +31,6 @@ UserSchema.methods.json = function () {
   };
 };
 
-const UserModel = mongoose.model("User", UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
 module.exports = UserModel;
