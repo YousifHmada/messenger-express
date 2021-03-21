@@ -1,16 +1,14 @@
-import React from "react";
-import { MuiThemeProvider } from "@material-ui/core";
-import { theme } from "./themes/theme.js";
-// import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-
-import "./App.css";
+import React from 'react';
+import { MuiThemeProvider } from '@material-ui/core';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import theme from './themes/theme';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem("user"));
+  // eslint-disable-next-line no-unused-vars
+  const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('user'));
 
   return (
     <MuiThemeProvider theme={theme}>
