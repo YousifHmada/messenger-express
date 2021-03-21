@@ -21,21 +21,24 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiInput-underline:before': {
       borderBottom: '1.2px solid rgba(0, 0, 0, 0.2)',
     },
+    '& .MuiInputBase-root': {
+      fontWeight: 600,
+    },
+    '& .MuiFormControl-marginNormal': {
+      marginTop: '29px',
+    },
   },
   welcome: {
-    fontSize: 26,
-    paddingBottom: 20,
+    marginBottom: '-8px',
     color: '#000000',
-    fontWeight: 700,
     fontFamily: "'Open Sans'",
   },
   heroText: {
-    fontSize: 26,
-    fontFamily: "'Open Sans'",
     textAlign: 'center',
+    fontWeight: 400,
     color: 'white',
-    marginTop: 30,
-    maxWidth: 300,
+    marginTop: 40,
+    maxWidth: 270,
   },
   overlay: {
     backgroundImage:
@@ -56,24 +59,21 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     bgcolor: 'background.paper',
     minHeight: '100vh',
-    paddingTop: 23,
+    paddingTop: 30,
   },
   accBtn: {
-    width: 170,
-    height: 54,
-    borderRadius: 5,
+    width: 140,
+    fontWeight: 600,
     filter: 'drop-shadow(0px 2px 6px rgba(74,106,149,0.2))',
     backgroundColor: '#ffffff',
     color: theme.palette.primary.main,
+    marginRight: 41,
     boxShadow: 'none',
-    marginRight: 35,
+    borderRadius: 5,
   },
   noAccBtn: {
-    fontSize: 14,
     color: '#b0b0b0',
-    fontWeight: 400,
-    textAlign: 'center',
-    marginRight: 21,
+    marginRight: 19,
     whiteSpace: 'nowrap',
   },
   image: {
@@ -94,7 +94,6 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
   },
   label: { fontSize: 19, color: 'rgb(0,0,0,0.4)', paddingLeft: '5px' },
   submit: {
@@ -105,11 +104,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 3,
     marginTop: 49,
     fontSize: 16,
-    fontWeight: 'bold',
   },
   inputs: {
-    marginTop: '.8rem',
-    height: '2rem',
+    marginTop: '0.8rem',
+    height: '1rem',
     padding: '5px',
   },
   link: { textDecoration: 'none', display: 'flex', flexWrap: 'nowrap' },
@@ -157,11 +155,12 @@ export default function Register() {
           <Hidden xsDown>
             <img
               width={67}
+              height={67}
               alt="chat bubble"
               src={`${process.env.PUBLIC_URL}/images/chatBubble.png`}
             />
             <Hidden smDown>
-              <Typography className={classes.heroText}>
+              <Typography className={classes.heroText} component="p" variant="h5">
                 Converse with anyone with any language
               </Typography>
             </Hidden>
@@ -179,7 +178,7 @@ export default function Register() {
             </Link>
           </Box>
 
-          <Box width="100%" maxWidth={450} p={3} alignSelf="center">
+          <Box width="100%" maxWidth={424} p={3} alignSelf="center">
             <Grid container>
               <Grid item xs>
                 <Typography className={classes.welcome} component="h1" variant="h5">
