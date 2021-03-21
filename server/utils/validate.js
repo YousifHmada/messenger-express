@@ -1,23 +1,24 @@
 const { isEmpty } = require("./array");
+const ERRORS = require("./errors");
 
 function validateEmail(value) {
-  if (isEmpty(value)) throw new Error("Email is required");
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    throw new Error("Invalid email address");
+  if (isEmpty(value)) return ERRORS.REQUIRED_EMAIL;
+  else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    return ERRORS.INVALID_EMAIL;
   }
 }
 
 function validateUsername(value) {
-  if (isEmpty(value)) throw new Error("Username is required");
-  if (!/^[a-zA-Z].+$/i.test(value)) {
-    throw new Error("Username should start with an alphabetical character");
+  if (isEmpty(value)) return ERRORS.REQUIRED_USERNAME;
+  else if (!/^[a-zA-Z].+$/i.test(value)) {
+    return ERRORS.USERNAME_STARTS_WITH_NO_ALPH_CHAR;
   }
 }
 
 function validatePassword(value) {
-  if (isEmpty(value)) throw new Error("Password is required");
-  if (!/(?=.{6,})/i.test(value)) {
-    throw new Error("The password must be six characters or longer");
+  if (isEmpty(value)) return ERRORS.REQUIRED_PASSWORD;
+  else if (!/(?=.{6,})/i.test(value)) {
+    return ERRORS.PASSWORD_LESS_THAN_6_CHARS;
   }
 }
 

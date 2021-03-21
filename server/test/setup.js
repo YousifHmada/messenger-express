@@ -1,4 +1,4 @@
-function setup(params) {
+function setup() {
   /* Sets up the environment variables from your .env file*/
   require("dotenv-defaults").config();
 }

@@ -1,16 +1,18 @@
 const createError = require("http-errors");
 const express = require("express");
-const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
 const setupTestEnv = require("./test/setup");
-const { isTest } = require("./utils/environment");
+const { isTest, isDevelopment } = require("./utils/environment");
 const logger = require("./utils/logger");
+const CustomError = require("./utils/customError");
 const rootRouter = require("./routes/index");
 
 const { json, urlencoded } = express;
+
+// TODO : Accept CORS in dev env, Do not accept CORS in prod env so that we still safe against CSRF attacks
 
 if (isTest()) {
   setupTestEnv();
@@ -35,7 +37,6 @@ app.use(morgan("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(join(__dirname, "public")));
 
 // Attach routes
 app.use("/", rootRouter);
@@ -49,11 +50,11 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = isDevelopment() ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.json({ error: err });
+  const error = err instanceof CustomError ? err : new CustomError(err);
+  res.status(error.status);
+  res.json(error.json());
 });
 
 module.exports = app;
