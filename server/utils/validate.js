@@ -1,5 +1,5 @@
 const { isUndefined } = require('./lang');
-const ERRORS = require('./errors');
+const ERRORS = require('./errors/messages');
 
 function validateEmail(value) {
   if (isUndefined(value)) {

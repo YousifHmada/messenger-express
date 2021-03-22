@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 const { hash, compareHash } = require('./crypto');
-const ERRORS = require('./errors');
+const ERRORS = require('./errors/messages');
 
 describe('#hash()', () => {
   it('it should return a hashed text (happy path)', async () => {

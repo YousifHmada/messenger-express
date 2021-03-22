@@ -1,21 +1,26 @@
-const CustomError = require('../utils/customError');
+const {
+  BadRequestError,
+  ForbiddenError,
+  NotFoundError,
+  ConflictError,
+} = require('../utils/errors/httpErrors');
 const logger = require('../utils/logger');
 const { validateUsername, validateEmail, validatePassword } = require('../utils/validate');
 const { hash, compareHash } = require('../utils/crypto');
 const User = require('../models/user');
 const { find } = require('../utils/array');
 const { isNotEmptyString, isUndefined, isNull } = require('../utils/lang');
-const ERRORS = require('../utils/errors');
+const ERRORS = require('../utils/errors/messages');
 
 async function createUser({ username, email, password }) {
   // Validate Syntax
-  const syntaxError = find(
+  const syntaxErrorMessage = find(
     validateUsername(username),
     validateEmail(email),
     validatePassword(password),
     isNotEmptyString,
   );
-  if (syntaxError) throw new CustomError(syntaxError);
+  if (syntaxErrorMessage) throw new BadRequestError(syntaxErrorMessage);
 
   const user = new User({
     username,
@@ -38,10 +43,7 @@ async function createUser({ username, email, password }) {
   } catch (error) {
     // NOTE - code 11000 means `unique key violation`, duplicate emails in our case
     if (error.code === 11000) {
-      throw new CustomError({
-        message: ERRORS.EMAIL_ALREADY_EXISTS,
-        status: 409,
-      });
+      throw new ConflictError(ERRORS.EMAIL_ALREADY_EXISTS);
     } else {
       throw error;
     }
@@ -50,25 +52,19 @@ async function createUser({ username, email, password }) {
 
 async function getUserByCredsOrFail(email, password) {
   // Validate Syntax
-  if (isUndefined(email)) throw new CustomError(ERRORS.REQUIRED_EMAIL);
-  if (isUndefined(password)) throw new CustomError(ERRORS.REQUIRED_PASSWORD);
+  if (isUndefined(email)) throw new BadRequestError(ERRORS.REQUIRED_EMAIL);
+  if (isUndefined(password)) throw new BadRequestError(ERRORS.REQUIRED_PASSWORD);
 
   // Validate Email Exists
   const user = await User.findOne({ email });
   if (isNull(user)) {
-    throw new CustomError({
-      message: ERRORS.INVALID_EMAIL_OR_PASSWORD,
-      status: 403,
-    });
+    throw new ForbiddenError(ERRORS.INVALID_EMAIL_OR_PASSWORD);
   }
 
   // Compare plain & hashed passwords
   const error = await compareHash(password, user.password);
   if (isNotEmptyString(error)) {
-    throw new CustomError({
-      message: ERRORS.INVALID_EMAIL_OR_PASSWORD,
-      status: 403,
-    });
+    throw new ForbiddenError(ERRORS.INVALID_EMAIL_OR_PASSWORD);
   }
 
   return user;
@@ -77,10 +73,7 @@ async function getUserByCredsOrFail(email, password) {
 async function getUserByIdOrFail(id) {
   const user = await User.findById(id);
   if (isNull(user)) {
-    throw new CustomError({
-      message: ERRORS.USER_NOT_FOUND,
-      status: 404,
-    });
+    throw new NotFoundError(ERRORS.USER_NOT_FOUND);
   }
 
   return user;

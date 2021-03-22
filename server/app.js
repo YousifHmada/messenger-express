@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const setupTestEnv = require('./test/setup');
 const { isTest, isDevelopment } = require('./utils/environment');
 const logger = require('./utils/logger');
-const CustomError = require('./utils/customError');
+const { BaseError, UnexpectedError } = require('./utils/errors/httpErrors');
 const rootRouter = require('./routes/index');
 
 const { json, urlencoded } = express;
@@ -57,9 +57,9 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = isDevelopment() ? err : {};
 
-  const error = err instanceof CustomError ? err : new CustomError(err);
-  res.status(error.status);
-  res.json(error.json());
+  const httpError = err instanceof BaseError ? err : new UnexpectedError(err);
+  res.status(httpError.status);
+  res.json(httpError.json());
 });
 
 module.exports = app;

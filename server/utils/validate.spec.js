@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 
-const ERRORS = require('./errors');
+const ERRORS = require('./errors/messages');
 
 const {
   validateUsername,

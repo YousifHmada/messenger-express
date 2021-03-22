@@ -1,6 +1,6 @@
 const { isNotEmptyString } = require('../../utils/lang');
-const CustomError = require('../../utils/customError');
-const ERRORS = require('../../utils/errors');
+const { UnauthorizedError } = require('../../utils/errors/httpErrors');
+const ERRORS = require('../../utils/errors/messages');
 
 function authRequired(req, res, next) {
   const sub = req.cookies.SUB;
@@ -9,10 +9,7 @@ function authRequired(req, res, next) {
     next();
   } else {
     next(
-      new CustomError({
-        message: ERRORS.UNAUTHORIZED_REQUEST,
-        status: 401,
-      }),
+      new UnauthorizedError(ERRORS.UNAUTHORIZED_REQUEST),
     ); // Throw a 401 error and terminate the request.
   }
 }

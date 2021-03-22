@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const ERRORS = require('./errors');
+const ERRORS = require('./errors/messages');
 const { isNotEmptyString } = require('./lang');
 
 function hash(text) {
