@@ -9,13 +9,14 @@ const {
   getUserByCredsOrFail,
   getUserByIdOrFail,
 } = require('../modules/users');
-const { isProduction } = require('../utils/environment');
+const { setAuthCookie, clearAuthCookie } = require('./helpers/cookies');
 
 router.post(
   '/register',
   withErrorDelegation(async (req, res) => {
     const { username, email, password } = req.body;
-    await createUser({ username, email, password });
+    const { _id: id } = await createUser({ username, email, password });
+    setAuthCookie(res, id);
     res.status(201).send();
   }),
 );
@@ -25,19 +26,21 @@ router.post(
   withErrorDelegation(async (req, res) => {
     const { email, password } = req.body;
     const { _id: id } = await getUserByCredsOrFail(email, password);
+    setAuthCookie(res, id);
+    res.status(201).send();
+  }),
+);
 
-    // Use this cookie to track user auth status
-    res.cookie('SUB', id, {
-      httpOnly: true, // Ensures no accessibility from JS (XSS proof)
-      secure: isProduction(), // Only apply secure flag in production env
-    });
-
+router.post(
+  '/logout',
+  withErrorDelegation(async (req, res) => {
+    clearAuthCookie(res);
     res.status(201).send();
   }),
 );
 
 router.get(
-  '/me',
+  '/userinfo',
   authRequired,
   withErrorDelegation(async (req, res) => {
     const user = await getUserByIdOrFail(req.sub);
