@@ -1,17 +1,9 @@
-function isEmpty(value) {
-  return (
-    value === undefined
-    || value === null
-    || value === ''
-    // eslint-disable-next-line no-prototype-builtins
-    || (value.hasOwnProperty('length') && value.length === 0)
-  );
-}
-
-function isNotEmpty(v) {
-  return !isEmpty(v);
-}
-
+/**
+ * Iterates over elements of collection, returning the first match
+ * It follows the Spread Syntax with the last arg being the filter function
+ * @param  {[...Any, Function]} args
+ * @return {Any | undefined}
+ */
 function find(...args) {
   const cb = args[args.length - 1];
   const values = args.slice(0, args.length - 1);
@@ -19,7 +11,5 @@ function find(...args) {
 }
 
 module.exports = {
-  isEmpty,
-  isNotEmpty,
   find,
 };

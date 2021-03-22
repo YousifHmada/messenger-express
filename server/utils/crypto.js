@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
 
-const { isNotEmpty } = require('./array');
 const ERRORS = require('./errors');
+const { isNotEmptyString } = require('./lang');
 
 function hash(text) {
   return new Promise((res, rej) => bcrypt.hash(
     text,
     Number(process.env.HASH_SALT_ROUNDS),
     (err, hashedText) => {
-      if (isNotEmpty(err)) {
+      if (isNotEmptyString(err)) {
         rej(err);
       } else {
         res(hashedText);

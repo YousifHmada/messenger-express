@@ -1,13 +1,10 @@
 const CustomError = require('../utils/customError');
 const logger = require('../utils/logger');
-const {
-  validateUsername,
-  validateEmail,
-  validatePassword,
-} = require('../utils/validate');
+const { validateUsername, validateEmail, validatePassword } = require('../utils/validate');
 const { hash, compareHash } = require('../utils/crypto');
 const User = require('../models/user');
-const { isEmpty, find, isNotEmpty } = require('../utils/array');
+const { find } = require('../utils/array');
+const { isNotEmptyString, isUndefined, isNull } = require('../utils/lang');
 const ERRORS = require('../utils/errors');
 
 async function createUser({ username, email, password }) {
@@ -16,7 +13,7 @@ async function createUser({ username, email, password }) {
     validateUsername(username),
     validateEmail(email),
     validatePassword(password),
-    isNotEmpty,
+    isNotEmptyString,
   );
   if (syntaxError) throw new CustomError(syntaxError);
 
@@ -53,12 +50,12 @@ async function createUser({ username, email, password }) {
 
 async function getUserByCredsOrFail(email, password) {
   // Validate Syntax
-  if (isEmpty(email)) throw new CustomError(ERRORS.REQUIRED_EMAIL);
-  if (isEmpty(password)) throw new CustomError(ERRORS.REQUIRED_PASSWORD);
+  if (isUndefined(email)) throw new CustomError(ERRORS.REQUIRED_EMAIL);
+  if (isUndefined(password)) throw new CustomError(ERRORS.REQUIRED_PASSWORD);
 
   // Validate Email Exists
   const user = await User.findOne({ email });
-  if (isEmpty(user)) {
+  if (isNull(user)) {
     throw new CustomError({
       message: ERRORS.INVALID_EMAIL_OR_PASSWORD,
       status: 403,
@@ -67,7 +64,7 @@ async function getUserByCredsOrFail(email, password) {
 
   // Compare plain & hashed passwords
   const error = await compareHash(password, user.password);
-  if (isNotEmpty(error)) {
+  if (isNotEmptyString(error)) {
     throw new CustomError({
       message: ERRORS.INVALID_EMAIL_OR_PASSWORD,
       status: 403,
@@ -79,7 +76,7 @@ async function getUserByCredsOrFail(email, password) {
 
 async function getUserByIdOrFail(id) {
   const user = await User.findById(id);
-  if (isEmpty(user)) {
+  if (isNull(user)) {
     throw new CustomError({
       message: ERRORS.USER_NOT_FOUND,
       status: 404,

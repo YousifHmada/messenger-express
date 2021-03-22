@@ -1,8 +1,8 @@
-const { isEmpty } = require('./array');
+const { isUndefined } = require('./lang');
 const ERRORS = require('./errors');
 
 function validateEmail(value) {
-  if (isEmpty(value)) {
+  if (isUndefined(value)) {
     return ERRORS.REQUIRED_EMAIL;
   }
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
@@ -12,7 +12,7 @@ function validateEmail(value) {
 }
 
 function validateUsername(value) {
-  if (isEmpty(value)) return ERRORS.REQUIRED_USERNAME;
+  if (isUndefined(value)) return ERRORS.REQUIRED_USERNAME;
   if (!/^[a-zA-Z].+$/i.test(value)) {
     return ERRORS.USERNAME_STARTS_WITH_NO_ALPH_CHAR;
   }
@@ -20,7 +20,7 @@ function validateUsername(value) {
 }
 
 function validatePassword(value) {
-  if (isEmpty(value)) return ERRORS.REQUIRED_PASSWORD;
+  if (isUndefined(value)) return ERRORS.REQUIRED_PASSWORD;
   if (!/(?=.{6,})/i.test(value)) {
     return ERRORS.PASSWORD_LESS_THAN_6_CHARS;
   }
