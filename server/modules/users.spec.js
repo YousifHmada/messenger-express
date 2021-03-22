@@ -42,7 +42,7 @@ beforeEach(() => {
   User.findOne = sinon.stub().returns(userRecord);
   crypto = {
     hash: sinon.stub().returns(userRecord.password),
-    compareHash: sinon.stub().returns(undefined),
+    compareHash: sinon.stub().resolves(true),
   };
   validate = {
     validateUsername: sinon.stub().returns(undefined),
@@ -154,7 +154,7 @@ describe('#getUserByCredsOrFail()', () => {
   });
   it("it should throw an error if hash & password don't match", async () => {
     try {
-      crypto.compareHash.returns(ERRORS.HASH_DOESNT_MATCH);
+      crypto.compareHash.resolves(false);
       await usersModule.getUserByCredsOrFail(validUserPayload.email, validUserPayload.password);
       // assert.rejects();
     } catch (error) {

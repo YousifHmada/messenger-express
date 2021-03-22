@@ -1,14 +1,18 @@
 const bcrypt = require('bcrypt');
 
-const ERRORS = require('./errors/messages');
-const { isNotEmptyString } = require('./lang');
+const { isDefined } = require('./lang');
 
+/**
+ * Generates a hash of the given text and rejects if any errors encountered
+ * @param  {String} text [text to hash]
+ * @return {Promise<String>}
+ */
 function hash(text) {
   return new Promise((res, rej) => bcrypt.hash(
     text,
     Number(process.env.HASH_SALT_ROUNDS),
     (err, hashedText) => {
-      if (isNotEmptyString(err)) {
+      if (isDefined(err)) {
         rej(err);
       } else {
         res(hashedText);
@@ -17,14 +21,14 @@ function hash(text) {
   ));
 }
 
+/**
+ * Checks if text matches the given hash
+ * @param  {String} text
+ * @param  {String} hashedText [hash]
+ * @return {Promise<Boolean>}
+ */
 function compareHash(text, hashedText) {
-  return new Promise((res) => bcrypt.compare(text, hashedText, (_, valid) => {
-    if (!valid) {
-      res(ERRORS.HASH_DOESNT_MATCH);
-    } else {
-      res();
-    }
-  }));
+  return new Promise((res) => bcrypt.compare(text, hashedText, (_, valid) => res(valid)));
 }
 
 module.exports.hash = hash;

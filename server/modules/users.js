@@ -62,8 +62,8 @@ async function getUserByCredsOrFail(email, password) {
   }
 
   // Compare plain & hashed passwords
-  const error = await compareHash(password, user.password);
-  if (isNotEmptyString(error)) {
+  const passwordsMatch = await compareHash(password, user.password);
+  if (!passwordsMatch) {
     throw new ForbiddenError(ERRORS.INVALID_EMAIL_OR_PASSWORD);
   }
 
