@@ -45,9 +45,9 @@ beforeEach(() => {
     compareHash: sinon.stub().resolves(true),
   };
   validate = {
-    validateUsername: sinon.stub().returns(undefined),
-    validateEmail: sinon.stub().returns(undefined),
-    validatePassword: sinon.stub().returns(undefined),
+    isValidUsername: sinon.stub().returns(true),
+    isValidEmail: sinon.stub().returns(true),
+    isValidPassword: sinon.stub().returns(true),
   };
   usersModule = proxyquire('./users.js', {
     '../models/user': User,
@@ -61,17 +61,34 @@ afterEach(() => {
 });
 
 describe('#createUser()', () => {
-  it('it should call username, email and password validations and throw an error if not valid', async () => {
+  it('it should validate email', async () => {
     try {
-      validate.validateUsername.returns(ERRORS.USERNAME_STARTS_WITH_NO_ALPH_CHAR);
+      validate.isValidEmail.returns(false);
       await usersModule.createUser(invalidUserPayload);
       assert.rejects();
     } catch (error) {
-      sinon.assert.calledWith(validate.validateUsername, invalidUserPayload.username);
-      sinon.assert.calledWith(validate.validateEmail, invalidUserPayload.email);
-      sinon.assert.calledWith(validate.validatePassword, invalidUserPayload.password);
+      expect(error instanceof BaseError).to.equal(true);
+      expect(error.message).to.equal(ERRORS.INVALID_EMAIL);
+    }
+  });
+  it('it should validate username', async () => {
+    try {
+      validate.isValidUsername.returns(false);
+      await usersModule.createUser(invalidUserPayload);
+      assert.rejects();
+    } catch (error) {
       expect(error instanceof BaseError).to.equal(true);
       expect(error.message).to.equal(ERRORS.USERNAME_STARTS_WITH_NO_ALPH_CHAR);
+    }
+  });
+  it('it should validate password', async () => {
+    try {
+      validate.isValidPassword.returns(false);
+      await usersModule.createUser(invalidUserPayload);
+      assert.rejects();
+    } catch (error) {
+      expect(error instanceof BaseError).to.equal(true);
+      expect(error.message).to.equal(ERRORS.PASSWORD_LESS_THAN_6_CHARS);
     }
   });
   it('it should hash the password', async () => {
