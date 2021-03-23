@@ -1,0 +1,9 @@
+version: "2.1"
+services:
+  mongodb:
+    image: mongo
+    container_name: hatchways-messenger-express-mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - ${PWD}/.data/mongodb:/data/db
