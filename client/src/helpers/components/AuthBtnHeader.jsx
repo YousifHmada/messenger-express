@@ -40,7 +40,7 @@ export default function AuthBtnHeader({ to, noAccBtnText, accBtnText }) {
     <Box p={1} alignSelf="flex-end" alignItems="center">
       <Link to={to} className={classes.link}>
         <Button className={classes.noAccBtn}>{noAccBtnText}</Button>
-        <Button color="background" className={classes.accBtn} variant="contained">
+        <Button color="default" className={classes.accBtn} variant="contained">
           {accBtnText}
         </Button>
       </Link>
