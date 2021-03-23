@@ -1,26 +1,26 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { logout } from '../redux/auth/actionCreators';
+import { selectUserInfo } from '../redux/auth/selectors';
 
 export default function Dashboard() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const userInfo = useSelector(selectUserInfo);
 
-  React.useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (!user) history.push('/signup');
-  }, []);
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push('/login');
+  };
 
   return (
     <>
       {/* For testing purposes right now, ignore styling */}
       <p>Dashboard</p>
-      <p>User: {JSON.stringify(localStorage.getItem('user'))}</p>
-      <button
-        type="button"
-        onClick={() => {
-          localStorage.removeItem('user');
-          history.push('/login');
-        }}
-      >
+      <p>User: {JSON.stringify(userInfo)}</p>
+      <button type="button" onClick={handleLogout}>
         Logout
       </button>
     </>
