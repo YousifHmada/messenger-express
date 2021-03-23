@@ -8,9 +8,9 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 
-import AuthContainer from './helpers/components/AuthContainer';
-import AuthBtnHeader from './helpers/components/AuthBtnHeader';
-import useStyles from './helpers/hooks/authStylesOverrides';
+import AuthContainer from '../helpers/components/AuthContainer';
+import AuthBtnHeader from '../helpers/components/AuthBtnHeader';
+import useStyles from '../helpers/hooks/authStyles';
 import { login } from '../redux/auth/actionCreators';
 import { selectLoginStatus, selectLoginError } from '../redux/auth/selectors';
 

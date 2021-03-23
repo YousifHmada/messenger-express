@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 
 import AuthSideBanner from './AuthSideBanner';
-import useStyles from '../hooks/authStylesOverrides';
-import { useCallOnAuthVerified } from '../hooks/auth';
-import { REQUEST_STATUS } from '../../../redux/helpers/loadingCycle';
+import useStyles from '../hooks/authStyles';
+import { useRedirectOnLoggedInUser } from '../hooks/auth';
+import { useRedirectOnSuccess } from '../hooks/requestStatus';
 
 export default function AuthContainer({ children, requestStatus, requestError }) {
   const classes = useStyles();
-  const history = useHistory();
   const [open, setOpen] = useState(false);
 
   // Hook to open snakebar on request has error
@@ -26,14 +24,10 @@ export default function AuthContainer({ children, requestStatus, requestError })
   }, [requestError]);
 
   // Hook to redirect to dashboard on request succeeded
-  useEffect(() => {
-    if (requestStatus === REQUEST_STATUS.SUCCEEDED) {
-      history.push('/dashboard');
-    }
-  }, [requestStatus]);
+  useRedirectOnSuccess(requestStatus, '/dashboard');
 
   // Hook to redirect to dashboard if user is loggedIn
-  useCallOnAuthVerified(() => history.push('/dashboard'), []);
+  useRedirectOnLoggedInUser('/dashboard');
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
