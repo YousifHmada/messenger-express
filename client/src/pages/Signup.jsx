@@ -8,9 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import { Formik } from 'formik';
 import Typography from '@material-ui/core/Typography';
 
-import AuthContainer from './helpers/components/AuthContainer';
-import AuthBtnHeader from './helpers/components/AuthBtnHeader';
-import useStyles from './helpers/hooks/authStylesOverrides';
+import AuthContainer from '../helpers/components/AuthContainer';
+import AuthBtnHeader from '../helpers/components/AuthBtnHeader';
+import useStyles from '../helpers/hooks/authStyles';
 import { register } from '../redux/auth/actionCreators';
 import { selectRegisterStatus, selectRegisterError } from '../redux/auth/selectors';
 
