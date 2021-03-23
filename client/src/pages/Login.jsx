@@ -13,6 +13,7 @@ import AuthBtnHeader from '../helpers/components/AuthBtnHeader';
 import useStyles from '../helpers/hooks/authStyles';
 import { login } from '../redux/auth/actionCreators';
 import { selectLoginStatus, selectLoginError } from '../redux/auth/selectors';
+import { REQUEST_STATUS } from '../redux/helpers/loadingCycle';
 
 export default function Login() {
   const classes = useStyles();
@@ -72,6 +73,7 @@ export default function Login() {
                 error={touched.email && Boolean(errors.email)}
                 value={values.email}
                 onChange={handleChange}
+                disabled={loginStatus === REQUEST_STATUS.LOADING}
               />
               <TextField
                 id="password"
@@ -91,6 +93,7 @@ export default function Login() {
                 error={touched.password && Boolean(errors.password)}
                 value={values.password}
                 onChange={handleChange}
+                disabled={loginStatus === REQUEST_STATUS.LOADING}
               />
 
               <Box textAlign="center">
@@ -100,6 +103,7 @@ export default function Login() {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  disabled={loginStatus === REQUEST_STATUS.LOADING}
                 >
                   Login
                 </Button>
