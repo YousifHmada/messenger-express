@@ -13,6 +13,7 @@ import AuthBtnHeader from '../helpers/components/AuthBtnHeader';
 import useStyles from '../helpers/hooks/authStyles';
 import { register } from '../redux/auth/actionCreators';
 import { selectRegisterStatus, selectRegisterError } from '../redux/auth/selectors';
+import { REQUEST_STATUS } from '../redux/helpers/loadingCycle';
 
 export default function SignUp() {
   const classes = useStyles();
@@ -23,6 +24,8 @@ export default function SignUp() {
   const handleSubmit = ({ username, email, password }) => {
     dispatch(register({ username, email, password }));
   };
+
+  const disabled = registerStatus === REQUEST_STATUS.LOADING;
 
   return (
     <AuthContainer requestStatus={registerStatus} requestError={registerError}>
@@ -69,6 +72,7 @@ export default function SignUp() {
                 error={touched.username && Boolean(errors.username)}
                 value={values.username}
                 onChange={handleChange}
+                disabled={disabled}
               />
               <TextField
                 id="email"
@@ -85,6 +89,7 @@ export default function SignUp() {
                 error={touched.email && Boolean(errors.email)}
                 value={values.email}
                 onChange={handleChange}
+                disabled={disabled}
               />
               <TextField
                 id="password"
@@ -103,6 +108,7 @@ export default function SignUp() {
                 error={touched.password && Boolean(errors.password)}
                 value={values.password}
                 onChange={handleChange}
+                disabled={disabled}
               />
 
               <Box textAlign="center">
@@ -112,6 +118,7 @@ export default function SignUp() {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  disabled={disabled}
                 >
                   Create
                 </Button>
