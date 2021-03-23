@@ -41,6 +41,7 @@ export default function SignUp() {
         </Grid>
         <Formik
           initialValues={{
+            username: '',
             email: '',
             password: '',
           }}

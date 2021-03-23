@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Route, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -29,10 +28,7 @@ export function withAuth(Component) {
   };
 }
 
+// eslint-disable-next-line react/prop-types
 export default function ProtectedRoute({ component, ...rest }) {
   return <Route {...rest} component={withAuth(component)} />;
 }
-
-ProtectedRoute.propTypes = {
-  component: PropTypes.node.isRequired,
-};
