@@ -14,6 +14,7 @@ export default makeStyles((theme) => ({
     },
   },
   noAccBtn: {
+    display: 'block',
     color: theme.palette.grey.main,
     whiteSpace: 'nowrap',
     fontWeight: theme.typography.fontWeightRegular,
@@ -24,6 +25,5 @@ export default makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    display: 'flex',
   },
 }));
