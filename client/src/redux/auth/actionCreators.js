@@ -19,12 +19,12 @@ const {
 export const register = ({ username, email, password }) => async (dispatch) => {
   dispatch(registerLoading());
   try {
-    await api.post('/auth/register', {
+    const { data } = await api.post('/auth/register', {
       username,
       email,
       password,
     });
-    dispatch(registerSucceeded());
+    dispatch(registerSucceeded(data));
   } catch (error) {
     dispatch(registerFailed(extractErrorPayload(error)));
   }
@@ -33,11 +33,11 @@ export const register = ({ username, email, password }) => async (dispatch) => {
 export const login = ({ email, password }) => async (dispatch) => {
   dispatch(loginLoading());
   try {
-    await api.post('/auth/login', {
+    const { data } = await api.post('/auth/login', {
       email,
       password,
     });
-    dispatch(loginSucceeded());
+    dispatch(loginSucceeded(data));
   } catch (error) {
     dispatch(loginFailed(extractErrorPayload(error)));
   }

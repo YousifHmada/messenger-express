@@ -7,7 +7,7 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('/POST auth/register', () => {
-  it('it should return 201', (done) => {
+  it('it should return 200', (done) => {
     chai
       .request(app)
       .post('/auth/register/')
@@ -17,7 +17,7 @@ describe('/POST auth/register', () => {
         password: '123456',
       })
       .end((err, res) => {
-        res.should.have.status(201);
+        res.should.have.status(200);
         done();
       });
   });

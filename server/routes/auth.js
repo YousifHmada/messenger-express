@@ -15,9 +15,10 @@ router.post(
   '/register',
   withErrorDelegation(async (req, res) => {
     const { username, email, password } = req.body;
-    const { _id: id } = await createUser({ username, email, password });
-    setAuthCookie(res, id);
-    res.status(201).send();
+    const user = await createUser({ username, email, password });
+    // eslint-disable-next-line no-underscore-dangle
+    setAuthCookie(res, user._id);
+    res.status(200).send(user.json());
   }),
 );
 
@@ -25,9 +26,10 @@ router.post(
   '/login',
   withErrorDelegation(async (req, res) => {
     const { email, password } = req.body;
-    const { _id: id } = await getUserByCredsOrFail(email, password);
-    setAuthCookie(res, id);
-    res.status(201).send();
+    const user = await getUserByCredsOrFail(email, password);
+    // eslint-disable-next-line no-underscore-dangle
+    setAuthCookie(res, user._id);
+    res.status(200).send(user.json());
   }),
 );
 
