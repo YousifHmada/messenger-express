@@ -14,7 +14,7 @@ export default makeStyles((theme) => ({
     backgroundPosition: 'center',
     flexDirection: 'column',
     minHeight: '100vh',
-    paddingBottom: 145,
+    paddingBottom: '10.358rem', // 145px
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
   heroText: {
     textAlign: 'center',
     color: theme.palette.white,
-    marginTop: 40,
-    maxWidth: 310,
+    marginTop: '2.858rem', // 40px
+    maxWidth: '22.143rem', // 310px
   },
 }));

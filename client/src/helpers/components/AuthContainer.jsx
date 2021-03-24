@@ -10,12 +10,12 @@ import { useRedirectOnSuccess } from '../hooks/requestStatus';
 
 export default function AuthContainer({ children, requestStatus, requestError }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   // Hook to open snakebar on request has error
   useEffect(() => {
     if (requestError) {
-      setOpen(true);
+      setOpenSnackbar(true);
     }
   }, [requestError]);
 
@@ -27,7 +27,7 @@ export default function AuthContainer({ children, requestStatus, requestError })
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
-    setOpen(false);
+    setOpenSnackbar(false);
   };
 
   return (
@@ -46,7 +46,7 @@ export default function AuthContainer({ children, requestStatus, requestError })
           vertical: 'bottom',
           horizontal: 'center',
         }}
-        open={open}
+        open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleClose}
         message={requestError && requestError.message}
