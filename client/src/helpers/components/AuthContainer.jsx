@@ -35,7 +35,14 @@ export default function AuthContainer({ children, requestStatus, requestError })
       <Grid container component="main" className={classes.root}>
         <AuthSideBanner item xs={false} sm={4} md={5} />
         <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square>
-          <Box className={classes.formContainer}>
+          <Box
+            display="flex"
+            alignItems="flex-start"
+            justifyContent="space-between"
+            flexDirection="column"
+            flexWrap="wrap"
+            className={classes.formContainer}
+          >
             {children}
             <Box p={1} alignSelf="center" />
           </Box>

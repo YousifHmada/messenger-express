@@ -9,7 +9,13 @@ export default function AuthSideBanner(props) {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Grid className={classes.image} {...props}>
-      <Box className={classes.overlay}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+        className={classes.overlay}
+      >
         <Hidden xsDown>
           <img
             width={67}

@@ -14,14 +14,10 @@ export default makeStyles((theme) => ({
     },
   },
   noAccBtn: {
-    display: 'block',
     color: theme.palette.grey.main,
     whiteSpace: 'nowrap',
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: '1.5rem', // 21px
-    [theme.breakpoints.down('xs')]: {
-      marginRight: 0,
-    },
   },
   link: {
     textDecoration: 'none',

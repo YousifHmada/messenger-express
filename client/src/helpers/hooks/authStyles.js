@@ -6,29 +6,15 @@ export default makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightBold,
   },
   formContainer: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    flexWrap: 'wrap',
     minHeight: '100vh',
     paddingTop: '1.572rem', // 22px
     [theme.breakpoints.down('xs')]: {
       margin: 'auto',
     },
   },
-  box: {
-    padding: '1.714rem', // 24px
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    flexDirection: 'column',
-    maxWidth: '900px',
-    margin: 'auto',
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
+    paddingBottom: '6.786rem', // 95px
   },
   submit: {
     width: '11.429rem', // 160px
