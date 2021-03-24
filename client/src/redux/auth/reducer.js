@@ -5,11 +5,13 @@ import createLoadingCycle, { REQUEST_STATUS } from '../helpers/loadingCycle';
 const userInfoLC = createLoadingCycle('userInfo');
 const loginLC = createLoadingCycle('login');
 const registerLC = createLoadingCycle('register');
+const logoutLC = createLoadingCycle('logout');
 
 const initialState = {
   ...userInfoLC.initialState,
   ...registerLC.initialState,
   ...loginLC.initialState,
+  ...logoutLC.initialState,
   userInfo: undefined,
 };
 
@@ -20,6 +22,7 @@ export const authSlice = createSlice({
     ...userInfoLC.reducers,
     ...registerLC.reducers,
     ...loginLC.reducers,
+    ...logoutLC.reducers,
     /**
      * UserInfo {
      *  username: String;
@@ -45,8 +48,9 @@ export const authSlice = createSlice({
       loginStatus: REQUEST_STATUS.SUCCEEDED,
       loginError: undefined,
     }),
-    userLoggedOut: () => ({
+    logoutLoading: () => ({
       ...initialState, // Reset to intialState
+      logoutStatus: REQUEST_STATUS.LOADING,
     }),
   },
 });
