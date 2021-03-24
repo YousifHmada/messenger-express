@@ -36,15 +36,21 @@ export const authSlice = createSlice({
       userInfoStatus: REQUEST_STATUS.SUCCEEDED,
       userInfoError: undefined,
     }),
-    registerSucceeded: (state) => ({
+    /**
+     * @param {UserInfo} action [userInfo]
+     */
+    registerSucceeded: (state, action) => ({
       ...state,
-      ...userInfoLC.initialState, // Reset UserInfo state
+      userInfo: action.payload,
       registerStatus: REQUEST_STATUS.SUCCEEDED,
       registerError: undefined,
     }),
-    loginSucceeded: (state) => ({
+    /**
+     * @param {UserInfo} action [userInfo]
+     */
+    loginSucceeded: (state, action) => ({
       ...state,
-      ...userInfoLC.initialState, // Reset UserInfo state
+      userInfo: action.payload,
       loginStatus: REQUEST_STATUS.SUCCEEDED,
       loginError: undefined,
     }),
