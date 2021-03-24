@@ -23,7 +23,7 @@ export default function AuthContainer({ children, requestStatus, requestError })
   useRedirectOnSuccess(requestStatus, '/dashboard');
 
   // Hook to redirect to dashboard if user is loggedIn
-  useRedirectOnLoggedInUser('/dashboard');
+  useRedirectOnLoggedInUser();
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;

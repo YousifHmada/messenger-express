@@ -22,12 +22,12 @@ export const useFetchUserInfo = () => {
 };
 
 // Hook to listen for auth status changes and redirect loggedIn users
-export const useRedirectOnLoggedInUser = (to) => {
+export const useRedirectOnLoggedInUser = () => {
   const history = useHistory();
   const userInfo = useFetchUserInfo();
   useEffect(() => {
     if (userInfo) {
-      history.push(to);
+      history.push('/dashboard');
     }
   }, [userInfo]);
 };
