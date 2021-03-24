@@ -1,7 +1,6 @@
 import { authSlice } from './reducer';
 
-export const {
-  userLoggedOut,
+const {
   userInfoLoading,
   userInfoSucceeded,
   userInfoFailed,
@@ -9,6 +8,8 @@ export const {
   loginSucceeded,
   registerLoading,
   registerSucceeded,
+  logoutLoading,
+  logoutSucceeded,
 } = authSlice.actions;
 
 // eslint-disable-next-line no-unused-vars
@@ -45,8 +46,9 @@ export const fetchUserInfo = () => (dispatch) => {
 
 // eslint-disable-next-line no-unused-vars
 export const logout = () => (dispatch) => {
+  dispatch(logoutLoading());
   setTimeout(() => {
     localStorage.removeItem('user'); // Just for test, will clean that in a following PR
+    dispatch(logoutSucceeded());
   }, 1000);
-  dispatch(userLoggedOut());
 };
