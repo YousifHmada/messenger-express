@@ -104,8 +104,6 @@ export default function Login() {
                   Login
                 </Button>
               </Box>
-
-              <div style={{ height: 95 }} />
             </form>
           )}
         </Formik>
