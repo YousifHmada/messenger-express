@@ -1,4 +1,5 @@
 import { authSlice } from './reducer';
+import { api, extractErrorPayload } from '../helpers/api';
 
 const {
   userInfoLoading,
@@ -6,49 +7,58 @@ const {
   userInfoFailed,
   loginLoading,
   loginSucceeded,
+  loginFailed,
   registerLoading,
   registerSucceeded,
+  registerFailed,
   logoutLoading,
   logoutSucceeded,
+  logoutFailed,
 } = authSlice.actions;
 
-// eslint-disable-next-line no-unused-vars
-export const register = ({ username, email, password }) => (dispatch) => {
+export const register = ({ username, email, password }) => async (dispatch) => {
   dispatch(registerLoading());
-  setTimeout(() => {
-    localStorage.setItem('user', JSON.stringify({ username, email })); // Just for test, will clean that in a following PR
+  try {
+    await api.post('/auth/register', {
+      username,
+      email,
+      password,
+    });
     dispatch(registerSucceeded());
-  }, 1000);
+  } catch (error) {
+    dispatch(registerFailed(extractErrorPayload(error)));
+  }
 };
 
-// eslint-disable-next-line no-unused-vars
-export const login = ({ email, password }) => (dispatch) => {
+export const login = ({ email, password }) => async (dispatch) => {
   dispatch(loginLoading());
-  setTimeout(() => {
-    localStorage.setItem('user', JSON.stringify({ username: email, email })); // Just for test, will clean that in a following PR
+  try {
+    await api.post('/auth/login', {
+      email,
+      password,
+    });
     dispatch(loginSucceeded());
-  }, 1000);
+  } catch (error) {
+    dispatch(loginFailed(extractErrorPayload(error)));
+  }
 };
 
-// eslint-disable-next-line no-unused-vars
-export const fetchUserInfo = () => (dispatch) => {
+export const fetchUserInfo = () => async (dispatch) => {
   dispatch(userInfoLoading());
-  setTimeout(() => {
-    const userInfo = JSON.parse(localStorage.getItem('user')); // Just for test, will clean that in a following PR
-
-    if (userInfo) {
-      dispatch(userInfoSucceeded(userInfo));
-    } else {
-      dispatch(userInfoFailed()); // Just for test, will clean that in a following PR
-    }
-  }, 1000);
+  try {
+    const { data } = await api.get('/auth/userInfo');
+    dispatch(userInfoSucceeded(data));
+  } catch (error) {
+    dispatch(userInfoFailed(extractErrorPayload(error)));
+  }
 };
 
-// eslint-disable-next-line no-unused-vars
-export const logout = () => (dispatch) => {
+export const logout = () => async (dispatch) => {
   dispatch(logoutLoading());
-  setTimeout(() => {
-    localStorage.removeItem('user'); // Just for test, will clean that in a following PR
+  try {
+    await api.post('/auth/logout');
     dispatch(logoutSucceeded());
-  }, 1000);
+  } catch (error) {
+    dispatch(logoutFailed(extractErrorPayload(error)));
+  }
 };

@@ -48,8 +48,10 @@ export const authSlice = createSlice({
       loginStatus: REQUEST_STATUS.SUCCEEDED,
       loginError: undefined,
     }),
-    logoutLoading: () => ({
+    logoutLoading: (state) => ({
+      ...state,
       ...initialState, // Reset to intialState
+      userInfoStatus: REQUEST_STATUS.FAILED, // Set userInfoStatus to failed to stop any attempts to fetch userInfo
       logoutStatus: REQUEST_STATUS.LOADING,
     }),
   },
