@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { expect } from 'chai';
+
 import createLoadingCycle, { REQUEST_STATUS } from './loadingCycle';
 
 describe('#createLoadingCycle', () => {

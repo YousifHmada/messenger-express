@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+export default makeStyles((theme) => ({
   welcome: {
     marginBottom: '-20px',
     fontWeight: theme.typography.fontWeightBold,
@@ -49,5 +49,3 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
 }));
-
-export default useStyles;

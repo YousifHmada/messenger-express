@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import { Box, Button } from '@material-ui/core';
 
 import useStyles from './AuthBtnHeaderStyles';
 
