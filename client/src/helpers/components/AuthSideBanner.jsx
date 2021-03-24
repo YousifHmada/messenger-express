@@ -1,8 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import Hidden from '@material-ui/core/Hidden';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Box, Hidden, Grid, Typography } from '@material-ui/core';
 
 import useStyles from './AuthSideBannerStyles';
 

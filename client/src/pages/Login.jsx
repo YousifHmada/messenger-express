@@ -1,12 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import { Button, TextField, Box, Grid, Typography } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Typography from '@material-ui/core/Typography';
 
 import AuthContainer from '../helpers/components/AuthContainer';
 import AuthBtnHeader from '../helpers/components/AuthBtnHeader';
