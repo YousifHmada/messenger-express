@@ -5,8 +5,11 @@ export const UNEXPECTED_ERROR = {
   status: 500,
 };
 
-export const extractErrorPayload = (error) =>
-  typeof error.response.data === 'string' ? UNEXPECTED_ERROR : error.response.data;
+export const extractErrorPayload = (error) => {
+  const { data } = error.response;
+  // Checks if the recieved error follows the API format, otherwise fall back to Unexpected error.
+  return typeof data === 'object' && data.message ? data : UNEXPECTED_ERROR;
+};
 
 export const baseURL = ''; // Example baseURL would be /api/v1
 
