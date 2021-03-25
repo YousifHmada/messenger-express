@@ -18,7 +18,7 @@ router.post(
     const user = await createUser({ username, email, password });
     // eslint-disable-next-line no-underscore-dangle
     setAuthCookie(res, user._id);
-    res.status(200).send(user.json());
+    res.status(201).send(user.json());
   }),
 );
 
@@ -37,7 +37,7 @@ router.post(
   '/logout',
   withErrorDelegation(async (req, res) => {
     clearAuthCookie(res);
-    res.status(201).send();
+    res.status(200).send();
   }),
 );
 
